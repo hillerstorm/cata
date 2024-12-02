@@ -42,7 +42,7 @@ func NewFeralDruid(character *core.Character, options *proto.Player) *FeralDruid
 	cat.AssumeBleedActive = feralOptions.Options.AssumeBleedActive
 	cat.maxRipTicks = cat.MaxRipTicks()
 
-	cat.EnableEnergyBar(100.0)
+	cat.EnableEnergyBar(100.0, proto.Class_ClassDruid)
 	cat.EnableRageBar(core.RageBarOptions{RageMultiplier: 1, MHSwingSpeed: 2.5})
 
 	cat.EnableAutoAttacks(cat, core.AutoAttackOptions{
