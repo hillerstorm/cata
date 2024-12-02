@@ -1381,6 +1381,30 @@ const idToCategoryMap: Record<number, number> = {
 	[48263]: DEFAULT_ACTION_CATEGORY + 0.1, // Frost Presence
 	[48265]: DEFAULT_ACTION_CATEGORY + 0.1, // Unholy Presence
 
+	// Monk
+	[120274]: 0.02, // Tiger Strikes (Main Hand)
+	[120278]: 0.03, // Tiger Strikes (Off Hand)
+	[100780]: MELEE_ACTION_CATEGORY + 0.01, // Jab
+	[100787]: MELEE_ACTION_CATEGORY + 0.02, // Tiger Palm
+	[100784]: MELEE_ACTION_CATEGORY + 0.03, // Blackout Kick
+	[130320]: MELEE_ACTION_CATEGORY + 0.04, // Rising Sun Kick
+	[113656]: MELEE_ACTION_CATEGORY + 0.05, // Fists of Fury (Cast)
+	[117418]: MELEE_ACTION_CATEGORY + 0.06, // Fists of Fury (Hit)
+	[101546]: MELEE_ACTION_CATEGORY + 0.07, // Spinning Crane Kick (Cast)
+	[107270]: MELEE_ACTION_CATEGORY + 0.08, // Spinning Crane Kick (Hit)
+	[116847]: MELEE_ACTION_CATEGORY + 0.07, // Rushing Jade Wind (Cast)
+	[148187]: MELEE_ACTION_CATEGORY + 0.08, // Rushing Jade Wind (Hit)
+	[115098]: SPELL_ACTION_CATEGORY + 0.01, // Chi Wave
+	[132467]: SPELL_ACTION_CATEGORY + 0.011, // Chi Wave (Damage)
+	[132463]: SPELL_ACTION_CATEGORY + 0.012, // Chi Wave (Heal)
+	[124081]: SPELL_ACTION_CATEGORY + 0.01, // Zen Sphere
+	[123986]: SPELL_ACTION_CATEGORY + 0.01, // Chi Burst
+	[116740]: SPELL_ACTION_CATEGORY + 0.02, // Tigereye Brew
+	[115399]: SPELL_ACTION_CATEGORY + 0.03, // Chi Brew
+	[115288]: SPELL_ACTION_CATEGORY + 0.04, // Energizing Brew
+	[123904]: SPELL_ACTION_CATEGORY + 0.05, // Invoke Xuen, the White Tiger
+	[115008]: SPELL_ACTION_CATEGORY + 0.05, // Chi Torpedo
+
 	// Generic
 	[53307]: SPELL_ACTION_CATEGORY + 0.931, // Thorns
 	[54043]: SPELL_ACTION_CATEGORY + 0.932, // Retribution Aura
@@ -1389,16 +1413,16 @@ const idToCategoryMap: Record<number, number> = {
 	[40536]: SPELL_ACTION_CATEGORY + 0.942, // Explosive Decoy
 	[41119]: SPELL_ACTION_CATEGORY + 0.943, // Saronite Bomb
 	[40771]: SPELL_ACTION_CATEGORY + 0.944, // Cobalt Frag Bomb
-	
+
 	// Souldrinker - to pair up the damage part with the healing
 	[109828]: SPELL_ACTION_CATEGORY + 0.945, // Drain Life - LFR
 	[108022]: SPELL_ACTION_CATEGORY + 0.946, // Drain Life - Normal
 	[109831]: SPELL_ACTION_CATEGORY + 0.947, // Drain Life - Heroic
-	
+
 	// No'Kaled - to pair up the different spells it can proc
 	[109871]: SPELL_ACTION_CATEGORY + 0.948, // Flameblast - LFR
 	[109869]: SPELL_ACTION_CATEGORY + 0.949, // Iceblast - LFR
-	[109867]: SPELL_ACTION_CATEGORY + 0.950, // Shadowblast - LFR
+	[109867]: SPELL_ACTION_CATEGORY + 0.95, // Shadowblast - LFR
 	[107785]: SPELL_ACTION_CATEGORY + 0.951, // Flameblast - Normal
 	[107789]: SPELL_ACTION_CATEGORY + 0.952, // Iceblast - Normal
 	[107787]: SPELL_ACTION_CATEGORY + 0.953, // Shadowblast - Normal
