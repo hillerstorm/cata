@@ -2,6 +2,7 @@ package core
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/wowsims/cata/sim/core/proto"
 )
@@ -219,6 +220,81 @@ func (value *APLValueCurrentComboPoints) GetInt(sim *Simulation) int32 {
 }
 func (value *APLValueCurrentComboPoints) String() string {
 	return "Current Combo Points"
+}
+
+type APLValueMaxComboPoints struct {
+	DefaultAPLValueImpl
+	maxComboPoints int32
+}
+
+func (rot *APLRotation) newValueMaxComboPoints(_ *proto.APLValueMaxComboPoints, uuid *proto.UUID) APLValue {
+	unit := rot.unit
+	if !unit.HasEnergyBar() {
+		rot.ValidationMessageByUUID(uuid, proto.LogLevel_Error, "%s does not use Combo Points", unit.Label)
+		return nil
+	}
+	return &APLValueMaxComboPoints{
+		maxComboPoints: unit.MaxComboPoints(),
+	}
+}
+func (value *APLValueMaxComboPoints) Type() proto.APLValueType {
+	return proto.APLValueType_ValueTypeInt
+}
+func (value *APLValueMaxComboPoints) GetInt(sim *Simulation) int32 {
+	return value.maxComboPoints
+}
+func (value *APLValueMaxComboPoints) String() string {
+	return fmt.Sprintf("Max Combo Points(%d)", value.maxComboPoints)
+}
+
+type APLValueEnergyRegenPerSecond struct {
+	DefaultAPLValueImpl
+	unit *Unit
+}
+
+func (rot *APLRotation) newValueEnergyRegenPerSecond(_ *proto.APLValueEnergyRegenPerSecond, uuid *proto.UUID) APLValue {
+	unit := rot.unit
+	if !unit.HasEnergyBar() {
+		rot.ValidationMessageByUUID(uuid, proto.LogLevel_Warning, "%s does not use Energy", unit.Label)
+		return nil
+	}
+	return &APLValueEnergyRegenPerSecond{
+		unit: unit,
+	}
+}
+func (value *APLValueEnergyRegenPerSecond) Type() proto.APLValueType {
+	return proto.APLValueType_ValueTypeFloat
+}
+func (value *APLValueEnergyRegenPerSecond) GetFloat(sim *Simulation) float64 {
+	return value.unit.EnergyRegenPerSecond()
+}
+func (value *APLValueEnergyRegenPerSecond) String() string {
+	return "Energy Regen Per Second"
+}
+
+type APLValueEnergyTimeToMax struct {
+	DefaultAPLValueImpl
+	unit *Unit
+}
+
+func (rot *APLRotation) newValueEnergyTimeToMax(_ *proto.APLValueEnergyTimeToMax, uuid *proto.UUID) APLValue {
+	unit := rot.unit
+	if !unit.HasEnergyBar() {
+		rot.ValidationMessageByUUID(uuid, proto.LogLevel_Warning, "%s does not use Energy", unit.Label)
+		return nil
+	}
+	return &APLValueEnergyTimeToMax{
+		unit: unit,
+	}
+}
+func (value *APLValueEnergyTimeToMax) Type() proto.APLValueType {
+	return proto.APLValueType_ValueTypeDuration
+}
+func (value *APLValueEnergyTimeToMax) GetDuration(sim *Simulation) time.Duration {
+	return value.unit.TimeToMaxEnergy()
+}
+func (value *APLValueEnergyTimeToMax) String() string {
+	return "Time To Max Energy"
 }
 
 type APLValueCurrentRunicPower struct {

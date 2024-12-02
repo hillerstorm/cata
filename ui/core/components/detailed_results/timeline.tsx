@@ -1380,6 +1380,25 @@ const idToCategoryMap: Record<number, number> = {
 	[50689]: DEFAULT_ACTION_CATEGORY + 0.1, // Blood Presence
 	[48263]: DEFAULT_ACTION_CATEGORY + 0.1, // Frost Presence
 	[48265]: DEFAULT_ACTION_CATEGORY + 0.1, // Unholy Presence
+	
+	// Monk
+	[120274]: 0.02, // Tiger Strikes (Main Hand)
+	[120278]: 0.03, // Tiger Strikes (Off Hand)
+	[100780]: MELEE_ACTION_CATEGORY + 0.01, // Jab
+	[100787]: MELEE_ACTION_CATEGORY + 0.02, // Tiger Palm
+	[100784]: MELEE_ACTION_CATEGORY + 0.03, // Blackout Kick
+	[130320]: MELEE_ACTION_CATEGORY + 0.04, // Rising Sun Kick
+	[113656]: MELEE_ACTION_CATEGORY + 0.05, // Fists of Fury (Cast)
+	[117418]: MELEE_ACTION_CATEGORY + 0.06, // Fists of Fury (Hit)
+	[116740]: SPELL_ACTION_CATEGORY + 0.01, // Tigereye Brew
+	[115399]: SPELL_ACTION_CATEGORY + 0.02, // Chi Brew
+	[115288]: SPELL_ACTION_CATEGORY + 0.03, // Energizing Brew
+	[115098]: SPELL_ACTION_CATEGORY + 0.04, // Chi Wave
+	[124081]: SPELL_ACTION_CATEGORY + 0.04, // Zen Sphere
+	[123986]: SPELL_ACTION_CATEGORY + 0.04, // Chi Burst
+	[116847]: SPELL_ACTION_CATEGORY + 0.05, // Rushing Jade Wind
+	[123904]: SPELL_ACTION_CATEGORY + 0.05, // Invoke Xuen, the White Tiger
+	[115008]: SPELL_ACTION_CATEGORY + 0.05, // Chi Torpedo
 
 	// Generic
 	[53307]: SPELL_ACTION_CATEGORY + 0.931, // Thorns

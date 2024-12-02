@@ -82,7 +82,7 @@ message APLAction {
     }
 }
 
-// NextIndex: 88
+// NextIndex: 94
 message APLValue {
 	UUID uuid = 87;
 
@@ -122,7 +122,10 @@ message APLValue {
         APLValueCurrentSolarEnergy current_solar_energy = 68;
         APLValueCurrentLunarEnergy current_lunar_energy = 69;
 		APLValueCurrentHolyPower current_holy_power = 75;
+		APLValueMaxComboPoints max_combo_points = 90;
 		APLValueMaxRunicPower max_runic_power = 86;
+		APLValueEnergyRegenPerSecond energy_regen_per_second = 91;
+		APLValueEnergyTimeToMax energy_time_to_max = 92;
 
 		// Unit values
 		APLValueUnitIsMoving unit_is_moving = 72;
@@ -199,6 +202,9 @@ message APLValue {
 		APLValueMageCurrentCombustionDotEstimate mage_current_combustion_dot_estimate = 77;
 		APLValueShamanCanSnapshotStrongerFireElemental shaman_can_snapshot_stronger_fire_elemental = 82;
         APLValueShamanFireElementalDuration shaman_fire_elemental_duration = 83;
+        APLValueMonkCurrentChi monk_current_chi = 88;
+		APLValueMonkMaxChi monk_max_chi = 89;
+		APLValueMonkNextChiBrewRecharge monk_next_chi_brew_recharge = 93;
     }
 }
 
@@ -438,7 +444,10 @@ message APLValueCurrentRunicPower {}
 message APLValueCurrentSolarEnergy {}
 message APLValueCurrentLunarEnergy {}
 message APLValueCurrentHolyPower {}
+message APLValueMaxComboPoints {}
 message APLValueMaxRunicPower {}
+message APLValueEnergyRegenPerSecond {}
+message APLValueEnergyTimeToMax {}
 
 enum APLValueRuneType {
     RuneUnknown = 0;
@@ -653,3 +662,7 @@ message APLValueShamanCanSnapshotStrongerFireElemental {
 }
 message APLValueShamanFireElementalDuration {
 }
+
+message APLValueMonkCurrentChi {}
+message APLValueMonkMaxChi {}
+message APLValueMonkNextChiBrewRecharge {}

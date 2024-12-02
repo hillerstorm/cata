@@ -120,10 +120,16 @@ func (rot *APLRotation) newAPLValue(config *proto.APLValue) APLValue {
 		value = rot.newValueCurrentFocus(config.GetCurrentFocus(), config.Uuid)
 	case *proto.APLValue_CurrentComboPoints:
 		value = rot.newValueCurrentComboPoints(config.GetCurrentComboPoints(), config.Uuid)
+	case *proto.APLValue_MaxComboPoints:
+		value = rot.newValueMaxComboPoints(config.GetMaxComboPoints(), config.Uuid)
 	case *proto.APLValue_CurrentRunicPower:
 		value = rot.newValueCurrentRunicPower(config.GetCurrentRunicPower(), config.Uuid)
 	case *proto.APLValue_MaxRunicPower:
 		value = rot.newValueMaxRunicPower(config.GetMaxRunicPower(), config.Uuid)
+	case *proto.APLValue_EnergyRegenPerSecond:
+		value = rot.newValueEnergyRegenPerSecond(config.GetEnergyRegenPerSecond(), config.Uuid)
+	case *proto.APLValue_EnergyTimeToMax:
+		value = rot.newValueEnergyTimeToMax(config.GetEnergyTimeToMax(), config.Uuid)
 
 	// Resources Runes
 	case *proto.APLValue_CurrentRuneCount:
