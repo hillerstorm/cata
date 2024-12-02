@@ -276,7 +276,7 @@ func NewRogue(character *core.Character, options *proto.RogueOptions, talents st
 		rogue.GetMHWeapon().WeaponType == proto.WeaponType_WeaponTypeDagger {
 		maxEnergy += 20
 	}
-	rogue.EnableEnergyBar(maxEnergy)
+	rogue.EnableEnergyBar(maxEnergy, 5, proto.Class_ClassRogue)
 
 	rogue.EnableAutoAttacks(rogue, core.AutoAttackOptions{
 		MainHand:       rogue.WeaponFromMainHand(0), // Set crit multiplier later when we have targets.

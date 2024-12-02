@@ -34,6 +34,9 @@ import (
 	"github.com/wowsims/cata/sim/warrior/arms"
 	"github.com/wowsims/cata/sim/warrior/fury"
 	protWarrior "github.com/wowsims/cata/sim/warrior/protection"
+	// "github.com/wowsims/cata/sim/monk/brewmaster"
+	// "github.com/wowsims/cata/sim/monk/mistweaver"
+	"github.com/wowsims/cata/sim/monk/windwalker"
 )
 
 var registered = false
@@ -84,4 +87,8 @@ func RegisterAll() {
 	arms.RegisterArmsWarrior()
 	fury.RegisterFuryWarrior()
 	protWarrior.RegisterProtectionWarrior()
+
+	// brewmaster.RegisterWindwalkerMonk()
+	// mistwweaver.RegisterWindwalkerMonk()
+	windwalker.RegisterWindwalkerMonk()
 }

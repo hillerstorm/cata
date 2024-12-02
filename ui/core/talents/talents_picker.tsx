@@ -54,7 +54,7 @@ export class TalentsPicker<ModObject extends Player<any> | HunterPet<any>, Talen
 				this.maxPoints = MAX_POINTS_HUNTER_PET;
 			}
 		} else {
-			this.maxPoints = MAX_POINTS_PLAYER;
+			this.maxPoints = config.pointsPerRow === 1 ? 6 : MAX_POINTS_PLAYER;
 		}
 
 		const getPointsRemaining = (): number => this.maxPoints - modObject.getTalentTreePoints().reduce((sum, points) => sum + points, 0);

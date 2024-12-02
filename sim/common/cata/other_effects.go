@@ -1380,6 +1380,7 @@ type IgniteConfig struct {
 	ProcTrigger        core.ProcTrigger // Ignores the Handler field and creates a custom one, but uses all others.
 	DamageCalculator   IgniteDamageCalculator
 	IncludeAuraDelay   bool // "munching" and "free roll-over" interactions
+	SpellSchool        core.SpellSchool
 }
 
 func RegisterIgniteEffect(unit *core.Unit, config IgniteConfig) *core.Spell {
@@ -1389,9 +1390,13 @@ func RegisterIgniteEffect(unit *core.Unit, config IgniteConfig) *core.Spell {
 		spellFlags |= core.SpellFlagPassiveSpell
 	}
 
+	if config.SpellSchool == 0 {
+		config.SpellSchool = core.SpellSchoolFire
+	}
+
 	igniteSpell := unit.RegisterSpell(core.SpellConfig{
 		ActionID:         config.ActionID,
-		SpellSchool:      core.SpellSchoolFire,
+		SpellSchool:      config.SpellSchool,
 		ProcMask:         core.ProcMaskSpellProc,
 		Flags:            spellFlags,
 		DamageMultiplier: 1,

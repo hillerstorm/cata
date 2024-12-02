@@ -1572,6 +1572,8 @@ export class Player<SpecType extends Spec> {
 			case Spec.SpecFrostMage:
 			case Spec.SpecFuryWarrior:
 				return 2;
+			case Spec.SpecWindwalkerMonk:
+				return 2.5
 			default:
 				return 8;
 		}

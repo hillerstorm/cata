@@ -51,7 +51,7 @@ export class TalentsTab<SpecType extends Spec> extends SimTab {
 			setValue: (eventID: EventID, player: Player<any>, newValue: string) => {
 				player.setTalentsString(eventID, newValue);
 			},
-			pointsPerRow: 5,
+			pointsPerRow: this.simUI.player.isClass(Class.ClassMonk) ? 1 : 5,
 		});
 	}
 

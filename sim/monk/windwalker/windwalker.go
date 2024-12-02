@@ -1,0 +1,74 @@
+package windwalker
+
+import (
+	"github.com/wowsims/cata/sim/core"
+	"github.com/wowsims/cata/sim/core/proto"
+	"github.com/wowsims/cata/sim/core/stats"
+	"github.com/wowsims/cata/sim/monk"
+)
+
+func RegisterWindwalkerMonk() {
+	core.RegisterAgentFactory(
+		proto.Player_WindwalkerMonk{},
+		proto.Spec_SpecWindwalkerMonk,
+		func(character *core.Character, options *proto.Player) core.Agent {
+			return NewWindwalkerMonk(character, options)
+		},
+		func(player *proto.Player, spec interface{}) {
+			playerSpec, ok := spec.(*proto.Player_WindwalkerMonk) // I don't really understand this line
+			if !ok {
+				panic("Invalid spec value for Windwalker Monk!")
+			}
+			player.Spec = playerSpec
+		},
+	)
+}
+
+func NewWindwalkerMonk(character *core.Character, options *proto.Player) *WindwalkerMonk {
+	monkOptions := options.GetWindwalkerMonk()
+
+	ww := &WindwalkerMonk{
+		Monk: monk.NewMonk(character, monkOptions.Options.ClassOptions, options.TalentsString),
+	}
+	ww.Monk.Stance = monk.FierceTiger
+
+	return ww
+}
+
+type WindwalkerMonk struct {
+	*monk.Monk
+
+	TigereyeBrewStackAura *core.Aura
+
+	outstandingChi int32
+}
+
+func (ww *WindwalkerMonk) GetMonk() *monk.Monk {
+	return ww.Monk
+}
+
+func (ww *WindwalkerMonk) Initialize() {
+	ww.Monk.Initialize()
+	ww.RegisterSpecializationEffects()
+}
+
+func (ww *WindwalkerMonk) ApplyTalents() {
+	ww.Monk.ApplyTalents()
+	ww.ApplyArmorSpecializationEffect(stats.Agility, proto.ArmorType_ArmorTypeLeather)
+}
+
+func (ww *WindwalkerMonk) Reset(sim *core.Simulation) {
+	ww.Monk.Stance = monk.FierceTiger
+	ww.Monk.Reset(sim)
+}
+
+func (ww *WindwalkerMonk) RegisterSpecializationEffects() {
+	ww.registerEnergizingBrew()
+	ww.registerPassives()
+	ww.registerRisingSunKick()
+	ww.registerTigereyeBrew()
+}
+
+func (ww *WindwalkerMonk) getMasteryPercent() float64 {
+	return (2.5 + ww.GetMasteryPoints()) / 100.0
+}
