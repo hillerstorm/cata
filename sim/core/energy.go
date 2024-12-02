@@ -13,6 +13,7 @@ type energyBar struct {
 
 	maxEnergy      float64
 	currentEnergy  float64
+	maxComboPoints int32
 	comboPoints    int32
 	nextEnergyTick time.Duration
 
@@ -26,20 +27,26 @@ type energyBar struct {
 
 	regenMetrics        *ResourceMetrics
 	EnergyRefundMetrics *ResourceMetrics
+
+	ownerClass              proto.Class
+	comboPointsResourceName string // "chi" or "combo points"
 }
 
-func (unit *Unit) EnableEnergyBar(maxEnergy float64) {
+func (unit *Unit) EnableEnergyBar(maxEnergy float64, unitClass proto.Class) {
 	unit.SetCurrentPowerBar(EnergyBar)
 
 	unit.energyBar = energyBar{
-		unit:                  unit,
-		maxEnergy:             max(100, maxEnergy),
-		EnergyTickDuration:    unit.ReactionTime,
-		EnergyPerTick:         10.0 * unit.ReactionTime.Seconds(),
-		energyRegenMultiplier: 1,
-		hasteRatingMultiplier: 1,
-		regenMetrics:          unit.NewEnergyMetrics(ActionID{OtherID: proto.OtherAction_OtherActionEnergyRegen}),
-		EnergyRefundMetrics:   unit.NewEnergyMetrics(ActionID{OtherID: proto.OtherAction_OtherActionRefund}),
+		unit:                    unit,
+		maxEnergy:               max(100, maxEnergy),
+		maxComboPoints:          5,
+		EnergyTickDuration:      unit.ReactionTime,
+		EnergyPerTick:           10.0 * unit.ReactionTime.Seconds(),
+		energyRegenMultiplier:   1,
+		hasteRatingMultiplier:   1,
+		regenMetrics:            unit.NewEnergyMetrics(ActionID{OtherID: proto.OtherAction_OtherActionEnergyRegen}),
+		EnergyRefundMetrics:     unit.NewEnergyMetrics(ActionID{OtherID: proto.OtherAction_OtherActionRefund}),
+		ownerClass:              unitClass,
+		comboPointsResourceName: Ternary(unitClass == proto.Class_ClassMonk, "chi", "combo points"),
 	}
 }
 
@@ -76,6 +83,10 @@ func (eb *energyBar) TimeToTargetEnergy(targetEnergy float64) time.Duration {
 	return DurationFromSeconds((targetEnergy - eb.currentEnergy) / eb.EnergyRegenPerSecond())
 }
 
+func (eb *energyBar) CurrentEnergyRegenMultiplier() float64 {
+	return eb.energyRegenMultiplier
+}
+
 func (eb *energyBar) AddEnergy(sim *Simulation, amount float64, metrics *ResourceMetrics) {
 	if amount < 0 {
 		panic("Trying to add negative energy!")
@@ -108,6 +119,17 @@ func (eb *energyBar) SpendEnergy(sim *Simulation, amount float64, metrics *Resou
 
 func (eb *energyBar) ComboPoints() int32 {
 	return eb.comboPoints
+}
+
+func (eb *energyBar) SetMaxComboPoints(maxComboPoints int32) {
+	eb.maxComboPoints = maxComboPoints
+	if eb.maxComboPoints < eb.comboPoints {
+		eb.comboPoints = eb.maxComboPoints
+	}
+}
+
+func (eb *energyBar) MaxComboPoints() int32 {
+	return eb.maxComboPoints
 }
 
 // Gives an immediate partial energy tick and restarts the tick timer.
@@ -143,22 +165,32 @@ func (eb *energyBar) UpdateMaxEnergy(sim *Simulation, bonusEnergy float64, metri
 }
 
 func (eb *energyBar) AddComboPoints(sim *Simulation, pointsToAdd int32, metrics *ResourceMetrics) {
-	newComboPoints := min(eb.comboPoints+pointsToAdd, 5)
+	newComboPoints := min(eb.comboPoints+pointsToAdd, eb.maxComboPoints)
 	metrics.AddEvent(float64(pointsToAdd), float64(newComboPoints-eb.comboPoints))
 
 	if sim.Log != nil {
-		eb.unit.Log(sim, "Gained %d combo points from %s (%d --> %d) of %0.0f total.", pointsToAdd, metrics.ActionID, eb.comboPoints, newComboPoints, 5.0)
+		eb.unit.Log(sim, "Gained %d %s from %s (%d --> %d) of %0.0f total.", pointsToAdd, eb.comboPointsResourceName, metrics.ActionID, eb.comboPoints, newComboPoints, eb.maxComboPoints)
 	}
 
 	eb.comboPoints = newComboPoints
 }
 
+func (eb *energyBar) SpendPartialComboPoints(sim *Simulation, pointsToSpend int32, metrics *ResourceMetrics) {
+	eb.spendComboPointsInternal(sim, pointsToSpend, metrics)
+}
+
 func (eb *energyBar) SpendComboPoints(sim *Simulation, metrics *ResourceMetrics) {
+	eb.spendComboPointsInternal(sim, eb.comboPoints, metrics)
+}
+
+func (eb *energyBar) spendComboPointsInternal(sim *Simulation, pointsToSpend int32, metrics *ResourceMetrics) {
+	pointsToSpend = min(pointsToSpend, eb.comboPoints)
+	newComboPoints := eb.comboPoints - pointsToSpend
 	if sim.Log != nil {
-		eb.unit.Log(sim, "Spent %d combo points from %s (%d --> %d) of %0.0f total.", eb.comboPoints, metrics.ActionID, eb.comboPoints, 0, 5.0)
+		eb.unit.Log(sim, "Spent %d %s from %s (%d --> %d) of %0.0f total.", pointsToSpend, eb.comboPointsResourceName, metrics.ActionID, eb.comboPoints, newComboPoints, eb.maxComboPoints)
 	}
-	metrics.AddEvent(float64(-eb.comboPoints), float64(-eb.comboPoints))
-	eb.comboPoints = 0
+	metrics.AddEvent(float64(-pointsToSpend), float64(-pointsToSpend))
+	eb.comboPoints = newComboPoints
 }
 
 func (eb *energyBar) RunTask(sim *Simulation) time.Duration {
@@ -210,7 +242,7 @@ type EnergyCost struct {
 	ComboPointMetrics *ResourceMetrics
 }
 
-func newEnergyCost(spell *Spell, options EnergyCostOptions) *EnergyCost {
+func newEnergyCost(spell *Spell, options EnergyCostOptions, energyBar *energyBar) *EnergyCost {
 	spell.DefaultCast.Cost = options.Cost
 	if options.Refund > 0 && options.RefundMetrics == nil {
 		options.RefundMetrics = spell.Unit.EnergyRefundMetrics
@@ -220,7 +252,7 @@ func newEnergyCost(spell *Spell, options EnergyCostOptions) *EnergyCost {
 		Refund:            options.Refund,
 		RefundMetrics:     options.RefundMetrics,
 		ResourceMetrics:   spell.Unit.NewEnergyMetrics(spell.ActionID),
-		ComboPointMetrics: spell.Unit.NewComboPointMetrics(spell.ActionID),
+		ComboPointMetrics: Ternary(energyBar.ownerClass == proto.Class_ClassMonk, spell.Unit.NewChiMetrics(spell.ActionID), spell.Unit.NewComboPointMetrics(spell.ActionID)),
 	}
 }
 
