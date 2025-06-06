@@ -17,7 +17,7 @@ import (
 )
 
 // Sets the minimum itemlevel that should be considered for this expansions
-const MIN_EFFECT_ILVL = 416
+const MIN_EFFECT_ILVL = 315
 
 type ProcInfo struct {
 	Outcome  core.HitOutcome
@@ -358,7 +358,7 @@ func TryParseOnUseEffect(parsed *proto.UIItem, groupMap map[string]Group) Effect
 }
 
 func TryParseEnchantEffect(enchant *proto.UIEnchant, groupMapProc map[string]Group, instance *dbc.DBC, enchantSpellEffects map[int]*dbc.SpellEffect) EffectParseResult {
-	if (enchant.EnchantEffect.GetProc() != nil || EnchantHasDummyEffect(enchant, instance)) && enchant.EffectId > 4267 {
+	if (enchant.EnchantEffect.GetProc() != nil || EnchantHasDummyEffect(enchant, instance)) && enchant.EffectId > 4000 {
 
 		// Effect was already manually implemented
 		if core.HasEnchantEffect(enchant.EffectId) {

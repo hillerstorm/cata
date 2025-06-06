@@ -1,6 +1,7 @@
 package paladin
 
 import (
+	"github.com/wowsims/mop/sim/common/cata"
 	"github.com/wowsims/mop/sim/core"
 	"github.com/wowsims/mop/sim/core/proto"
 	"github.com/wowsims/mop/sim/core/stats"
@@ -20,7 +21,8 @@ type Paladin struct {
 	CurrentSeal *core.Aura
 
 	// Pets
-	AncientGuardian *AncientGuardianPet
+	GurthalakTentacles []*cata.TentacleOfTheOldOnesPet
+	AncientGuardian    *AncientGuardianPet
 
 	AvengersShield *core.Spell
 	Exorcism       *core.Spell
@@ -59,6 +61,16 @@ type Paladin struct {
 	ShieldOfTheRighteousMultiplicativeMultiplier float64
 }
 
+func (paladin *Paladin) GetTentacles() []*cata.TentacleOfTheOldOnesPet {
+	return paladin.GurthalakTentacles
+}
+
+func (paladin *Paladin) NewTentacleOfTheOldOnesPet() *cata.TentacleOfTheOldOnesPet {
+	pet := cata.NewTentacleOfTheOldOnesPet(&paladin.Character)
+	paladin.AddPet(pet)
+	return pet
+}
+
 // Implemented by each Paladin spec.
 type PaladinAgent interface {
 	GetPaladin() *Paladin
@@ -88,6 +100,7 @@ func (paladin *Paladin) AddPartyBuffs(_ *proto.PartyBuffs) {
 func (paladin *Paladin) Initialize() {
 	paladin.registerGlyphs()
 	paladin.registerSpells()
+	paladin.addCataclysmPvpGloves()
 	paladin.addMistsPvpGloves()
 }
 
@@ -172,6 +185,14 @@ func NewPaladin(character *core.Character, talentsStr string, options *proto.Pal
 
 	// Bonus Armor and Armor are treated identically for Paladins
 	paladin.AddStatDependency(stats.BonusArmor, stats.Armor, 1)
+
+	if mh := paladin.MainHand(); mh.Name == "Gurthalak, Voice of the Deeps" {
+		paladin.GurthalakTentacles = make([]*cata.TentacleOfTheOldOnesPet, 10)
+
+		for i := range 10 {
+			paladin.GurthalakTentacles[i] = paladin.NewTentacleOfTheOldOnesPet()
+		}
+	}
 
 	return paladin
 }

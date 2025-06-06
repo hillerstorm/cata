@@ -225,18 +225,18 @@ var ClassBaseStats = map[proto.Class]stats.Stats{
 }
 
 var ClassBaseScaling = map[proto.Class]float64{
-	proto.Class_ClassUnknown:     1710.000000,
-	proto.Class_ClassWarrior:     1246.298600,
-	proto.Class_ClassPaladin:     1141.926000,
-	proto.Class_ClassHunter:      1246.298600,
-	proto.Class_ClassRogue:       1246.298600,
-	proto.Class_ClassPriest:      1049.328400,
-	proto.Class_ClassDeathKnight: 1246.298600,
-	proto.Class_ClassShaman:      1114.501700,
-	proto.Class_ClassMage:        1040.778600,
-	proto.Class_ClassWarlock:     1068.202900,
-	proto.Class_ClassMonk:        1094.739700,
-	proto.Class_ClassDruid:       1094.739700,
+	proto.Class_ClassUnknown:     509.000000,
+	proto.Class_ClassDeathKnight: 1125.227400,
+	proto.Class_ClassDruid:       986.626460,
+	proto.Class_ClassHunter:      1125.227400,
+	proto.Class_ClassMage:        937.330080,
+	proto.Class_ClassMonk:        986.626403,
+	proto.Class_ClassPaladin:     1029.493400,
+	proto.Class_ClassPriest:      945.188840,
+	proto.Class_ClassRogue:       1125.227400,
+	proto.Class_ClassShaman:      1004.487900,
+	proto.Class_ClassWarlock:     962.335630,
+	proto.Class_ClassWarrior:     1125.227400,
 }
 
 func AddBaseStatsCombo(r proto.Race, c proto.Class) {

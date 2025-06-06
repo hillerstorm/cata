@@ -57,6 +57,7 @@ func ScanRawItemData(rows *sql.Rows) (dbc.Item, error) {
 		&raw.ItemClass,
 		&raw.ItemSubClass,
 		&raw.NameDescription,
+		&raw.RequiredLevel,
 	)
 	if err != nil {
 		panic(err)
@@ -127,7 +128,8 @@ func LoadAndWriteRawItems(dbHelper *DBHelper, filter string, inputsDir string) (
 			 s.StatModifier_bonusAmount,
 			 i.ClassID,
 			 i.SubClassID,
-			 COALESCE(ind.Description_lang, '')
+			 COALESCE(ind.Description_lang, ''),
+			s.RequiredLevel
 		FROM Item i
 		JOIN ItemSparse s ON i.ID = s.ID
 		JOIN ItemClass ic ON i.ClassID = ic.ClassID
@@ -398,7 +400,7 @@ func LoadAndWriteRawGems(dbHelper *DBHelper, inputsDir string) ([]dbc.Gem, error
 		JOIN Item i ON s.ID = i.ID
 		JOIN GemProperties gp ON s.Field_1_15_7_59706_035  = gp.ID
 		JOIN SpellItemEnchantment sie ON gp.Enchant_ID = sie.ID
-		WHERE i.ClassID = 3 AND s.ItemLevel > 85 AND s.OverallQualityId > 2`
+		WHERE i.ClassID = 3 AND s.ItemLevel = 85 AND s.OverallQualityId > 2`
 	items, err := LoadRows(dbHelper.db, query, ScanGemTable)
 	if err != nil {
 		return nil, fmt.Errorf("error loading items for GemTables: %w", err)
@@ -887,7 +889,7 @@ func LoadAndWriteConsumables(dbHelper *DBHelper, inputsDir string) ([]dbc.Consum
 			LEFT JOIN Spell sp ON ie.SpellID = sp.ID
 			LEFT JOIN SpellMisc sm ON ie.SpellId = sm.SpellID
 			LEFT JOIN SpellDuration sd ON sm.DurationIndex = sd.ID
-			WHERE ((i.ClassID = 0 AND i.SubclassID IS NOT 0 AND i.SubclassID IS NOT 8 AND i.SubclassID IS NOT 6) OR (i.ClassID = 7 AND i.SubclassID = 2)) AND ItemEffects is not null AND (s.RequiredLevel >= 85 OR i.ID = 22788 OR i.ID = 13442)
+			WHERE ((i.ClassID = 0 AND i.SubclassID IS NOT 0 AND i.SubclassID IS NOT 8 AND i.SubclassID IS NOT 6) OR (i.ClassID = 7 AND i.SubclassID = 2)) AND ItemEffects is not null AND (s.RequiredLevel < 85) AND (s.RequiredLevel >= 70 OR i.ID = 22788 OR i.ID = 13442)
 			AND s.Display_lang != ''
 			AND s.Display_lang NOT LIKE '%Test%'
 			AND s.Display_lang NOT LIKE 'QA%'

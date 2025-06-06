@@ -5,33 +5,31 @@ import { PaladinMajorGlyph, PaladinSeal, RetributionPaladin_Options as Retributi
 import { SavedTalents } from '../../core/proto/ui.js';
 import { Stats } from '../../core/proto_utils/stats';
 import DefaultApl from './apls/default.apl.json';
-import P1_Gear from './gear_sets/p1.gear.json';
+import P4_Gear from './gear_sets/p4.gear.json';
 
 // Preset options for this spec.
 // Eventually we will import these values for the raid sim too, so it's good to
 // keep them in a separate file.
 
-export const P1_GEAR_PRESET = PresetUtils.makePresetGear('P1', P1_Gear);
+export const P4_GEAR_PRESET = PresetUtils.makePresetGear('P4', P4_Gear);
 
 export const APL_PRESET = PresetUtils.makePresetAPLRotation('Default', DefaultApl);
 
 // Preset options for EP weights
-export const P1_EP_PRESET = PresetUtils.makePresetEpWeights(
-	'P1',
+export const P4_EP_PRESET = PresetUtils.makePresetEpWeights(
+	'P4',
 	Stats.fromMap(
 		{
-			[Stat.StatAttackPower]: 1.0,
-			[Stat.StatStrength]: 2.29,
-
-			[Stat.StatCritRating]: 1.0,
-			[Stat.StatHasteRating]: 1.11,
-			[Stat.StatMasteryRating]: 1.05,
-
-			[Stat.StatHitRating]: 1.32,
-			[Stat.StatExpertiseRating]: 1.18,
+			[Stat.StatHitRating]: 1.5,
+			[Stat.StatExpertiseRating]: 1.3,
+			[Stat.StatStrength]: 1.0,
+			[Stat.StatHasteRating]: 0.81,
+			[Stat.StatMasteryRating]: 0.8,
+			[Stat.StatCritRating]: 0.65,
+			[Stat.StatAttackPower]: 0.44,
 		},
 		{
-			[PseudoStat.PseudoStatMainHandDps]: 4.21,
+			[PseudoStat.PseudoStatMainHandDps]: 2.18,
 		},
 	),
 );
@@ -45,14 +43,13 @@ export const DefaultTalents = {
 		glyphs: Glyphs.create({
 			major1: PaladinMajorGlyph.GlyphOfTemplarsVerdict,
 			major2: PaladinMajorGlyph.GlyphOfDoubleJeopardy,
-			major3: PaladinMajorGlyph.GlyphOfMassExorcism,
 		}),
 	}),
 };
 
-export const P1_BUILD_PRESET = PresetUtils.makePresetBuild('P1', {
-	gear: P1_GEAR_PRESET,
-	epWeights: P1_EP_PRESET,
+export const P4_BUILD_PRESET = PresetUtils.makePresetBuild('P4', {
+	gear: P4_GEAR_PRESET,
+	epWeights: P4_EP_PRESET,
 	talents: DefaultTalents,
 	rotationType: APLRotationType.TypeAuto,
 });
@@ -64,10 +61,10 @@ export const DefaultOptions = RetributionPaladinOptions.create({
 });
 
 export const DefaultConsumables = ConsumesSpec.create({
-	flaskId: 76088, // Flask of Winter's Bite
-	foodId: 74646, // Black Pepper Ribs and Shrimp
-	potId: 76095, // Potion of Mogu Power
-	prepotId: 76095, // Potion of Mogu Power
+	flaskId: 58088, // Flask of Titanic Strength
+	foodId: 62670, // Beer-Basted Crocolisk
+	potId: 58146, // Golemblood Potion
+	prepotId: 58146, // Golemblood Potion
 });
 
 export const OtherDefaults = {
