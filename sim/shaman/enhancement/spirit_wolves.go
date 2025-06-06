@@ -44,7 +44,7 @@ func (enh *EnhancementShaman) NewSpiritWolf(index int) *SpiritWolf {
 			Name:                            "Spirit Wolf " + strconv.Itoa(index),
 			Owner:                           &enh.Character,
 			BaseStats:                       spiritWolfBaseStats,
-			StatInheritance:                 enh.makeStatInheritance(),
+			NonHitExpStatInheritance:        enh.makeStatInheritance(),
 			EnabledOnStart:                  false,
 			IsGuardian:                      true,
 			HasDynamicMeleeSpeedInheritance: true,
@@ -62,10 +62,6 @@ func (enh *EnhancementShaman) NewSpiritWolf(index int) *SpiritWolf {
 		},
 		AutoSwingMelee: true,
 	})
-
-	spiritWolf.OnPetEnable = func(sim *core.Simulation) {
-		spiritWolf.EnableDynamicStats(spiritWolf.shamanOwner.makeStatInheritance())
-	}
 
 	enh.AddPet(spiritWolf)
 

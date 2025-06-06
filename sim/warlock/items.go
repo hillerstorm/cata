@@ -80,12 +80,12 @@ func (warlock *Warlock) NewFieryImp() *FieryImpPet {
 
 	imp := &FieryImpPet{
 		Pet: core.NewPet(core.PetConfig{
-			Name:            "Fiery Imp",
-			Owner:           &warlock.Character,
-			BaseStats:       baseStats,
-			StatInheritance: statInheritance,
-			EnabledOnStart:  false,
-			IsGuardian:      true,
+			Name:                     "Fiery Imp",
+			Owner:                    &warlock.Character,
+			BaseStats:                baseStats,
+			NonHitExpStatInheritance: statInheritance,
+			EnabledOnStart:           false,
+			IsGuardian:               true,
 		}),
 	}
 

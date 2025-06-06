@@ -49,6 +49,7 @@ func RegisterAllOnUseCds() {
 	shared.NewSimpleStatActive(103990) // Resolve of Niuzao (Timeless)
 
 	// HasteRating
+	shared.NewSimpleStatActive(60233) // Shard of Woe (H)
 	shared.NewSimpleStatActive(86042) // Jade Charioteer Figurine
 	shared.NewSimpleStatActive(86043) // Jade Bandit Figurine
 	shared.NewSimpleStatActive(86771) // Jade Charioteer Figurine (Celestial)
@@ -59,6 +60,12 @@ func RegisterAllOnUseCds() {
 	shared.NewSimpleStatActive(93347) // Arcane Badge of the Shieldwall (Alliance)
 
 	// Health
+	shared.NewSimpleStatActive(72359)  // Ruthless Gladiator's Emblem of Cruelty (Season 11)
+	shared.NewSimpleStatActive(72360)  // Ruthless Gladiator's Emblem of Tenacity (Season 11)
+	shared.NewSimpleStatActive(72361)  // Ruthless Gladiator's Emblem of Meditation (Season 11)
+	shared.NewSimpleStatActive(73591)  // Cataclysmic Gladiator's Emblem of Meditation (LFR) (Season 11)
+	shared.NewSimpleStatActive(73592)  // Cataclysmic Gladiator's Emblem of Tenacity (LFR) (Season 11)
+	shared.NewSimpleStatActive(73593)  // Cataclysmic Gladiator's Emblem of Cruelty (LFR) (Season 11)
 	shared.NewSimpleStatActive(84399)  // Dreadful Gladiator's Emblem of Cruelty (Season 12)
 	shared.NewSimpleStatActive(84400)  // Dreadful Gladiator's Emblem of Tenacity (Season 12)
 	shared.NewSimpleStatActive(84401)  // Dreadful Gladiator's Emblem of Meditation (Season 12)
@@ -153,6 +160,9 @@ func RegisterAllOnUseCds() {
 	shared.NewSimpleStatActive(92782)  // Steadfast Footman's Medallion
 	shared.NewSimpleStatActive(92783)  // Mark of the Hardened Grunt
 	shared.NewSimpleStatActive(103639) // Pouch of White Ash
+
+	// SpellPower
+	shared.NewSimpleStatActive(87499) // Grakl's Gleaming Talisman
 
 	// Spirit
 	shared.NewSimpleStatActive(81264)  // Vial of Ichorous Blood (H)

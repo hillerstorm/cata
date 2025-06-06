@@ -24,7 +24,7 @@ func (shaman *Shaman) NewEarthElemental(isGuardian bool) *EarthElemental {
 			Name:                            core.Ternary(isGuardian, "Greater Earth Elemental", "Primal Earth Elemental"),
 			Owner:                           &shaman.Character,
 			BaseStats:                       shaman.earthElementalBaseStats(isGuardian),
-			StatInheritance:                 shaman.earthElementalStatInheritance(isGuardian),
+			NonHitExpStatInheritance:        shaman.earthElementalStatInheritance(isGuardian),
 			EnabledOnStart:                  false,
 			IsGuardian:                      isGuardian,
 			HasDynamicMeleeSpeedInheritance: true,
@@ -45,22 +45,9 @@ func (shaman *Shaman) NewEarthElemental(isGuardian bool) *EarthElemental {
 		AutoSwingMelee: true,
 	})
 
-	earthElemental.OnPetEnable = earthElemental.enable(isGuardian)
-	earthElemental.OnPetDisable = earthElemental.disable
-
 	shaman.AddPet(earthElemental)
 
 	return earthElemental
-}
-
-func (earthElemental *EarthElemental) enable(isGuardian bool) func(*core.Simulation) {
-	return func(sim *core.Simulation) {
-		earthElemental.EnableDynamicStats(earthElemental.shamanOwner.earthElementalStatInheritance(isGuardian))
-	}
-}
-
-func (earthElemental *EarthElemental) disable(sim *core.Simulation) {
-
 }
 
 func (earthElemental *EarthElemental) GetPet() *core.Pet {
@@ -96,7 +83,7 @@ func (earthElemental *EarthElemental) TryCast(sim *core.Simulation, target *core
 		return false
 	}
 	// all spell casts reset the elemental's swing timer
-	earthElemental.AutoAttacks.StopMeleeUntil(sim, sim.CurrentTime+spell.CurCast.CastTime, false)
+	earthElemental.AutoAttacks.StopMeleeUntil(sim, sim.CurrentTime+spell.CurCast.CastTime)
 	return true
 }
 

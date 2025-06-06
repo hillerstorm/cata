@@ -87,7 +87,7 @@ func (warlock *Warlock) makePet(
 			Name:                            name,
 			Owner:                           &warlock.Character,
 			BaseStats:                       baseStats,
-			StatInheritance:                 statInheritance,
+			NonHitExpStatInheritance:        statInheritance,
 			EnabledOnStart:                  enabledOnStart,
 			IsGuardian:                      isGuardian,
 			HasDynamicMeleeSpeedInheritance: true,

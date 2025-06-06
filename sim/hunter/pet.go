@@ -33,12 +33,12 @@ type HunterPet struct {
 
 func (hunter *Hunter) NewStampedePet(index int) *HunterPet {
 	conf := core.PetConfig{
-		Name:            "Stampede",
-		Owner:           &hunter.Character,
-		BaseStats:       hunterPetBaseStats,
-		StatInheritance: hunter.makeStatInheritance(),
-		EnabledOnStart:  false,
-		IsGuardian:      false,
+		Name:                     "Stampede",
+		Owner:                    &hunter.Character,
+		BaseStats:                hunterPetBaseStats,
+		NonHitExpStatInheritance: hunter.makeStatInheritance(),
+		EnabledOnStart:           false,
+		IsGuardian:               false,
 	}
 	stampedePet := &HunterPet{
 		Pet:         core.NewPet(conf),
@@ -62,12 +62,12 @@ func (hunter *Hunter) NewStampedePet(index int) *HunterPet {
 
 func (hunter *Hunter) NewDireBeastPet() *HunterPet {
 	conf := core.PetConfig{
-		Name:            "Dire Beast Pet",
-		Owner:           &hunter.Character,
-		BaseStats:       hunterPetBaseStats,
-		StatInheritance: hunter.makeStatInheritance(),
-		EnabledOnStart:  false,
-		IsGuardian:      true,
+		Name:                     "Dire Beast Pet",
+		Owner:                    &hunter.Character,
+		BaseStats:                hunterPetBaseStats,
+		NonHitExpStatInheritance: hunter.makeStatInheritance(),
+		EnabledOnStart:           false,
+		IsGuardian:               true,
 	}
 	direBeastPet := &HunterPet{
 		Pet:         core.NewPet(conf),
@@ -111,12 +111,12 @@ func (hunter *Hunter) NewHunterPet() *HunterPet {
 	}
 	petConfig := DefaultPetConfigs[hunter.Options.PetType]
 	conf := core.PetConfig{
-		Name:            petConfig.Name,
-		Owner:           &hunter.Character,
-		BaseStats:       hunterPetBaseStats,
-		StatInheritance: hunter.makeStatInheritance(),
-		EnabledOnStart:  true,
-		IsGuardian:      false,
+		Name:                     petConfig.Name,
+		Owner:                    &hunter.Character,
+		BaseStats:                hunterPetBaseStats,
+		NonHitExpStatInheritance: hunter.makeStatInheritance(),
+		EnabledOnStart:           true,
+		IsGuardian:               false,
 	}
 	hp := &HunterPet{
 		Pet:         core.NewPet(conf),

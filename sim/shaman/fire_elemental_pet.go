@@ -32,7 +32,7 @@ func (shaman *Shaman) NewFireElemental(isGuardian bool) *FireElemental {
 			Name:                            core.Ternary(isGuardian, "Greater Fire Elemental", "Primal Fire Elemental"),
 			Owner:                           &shaman.Character,
 			BaseStats:                       shaman.fireElementalBaseStats(isGuardian),
-			StatInheritance:                 shaman.fireElementalStatInheritance(isGuardian),
+			NonHitExpStatInheritance:        shaman.fireElementalStatInheritance(isGuardian),
 			EnabledOnStart:                  false,
 			IsGuardian:                      isGuardian,
 			HasDynamicCastSpeedInheritance:  true,
@@ -60,7 +60,7 @@ func (shaman *Shaman) NewFireElemental(isGuardian bool) *FireElemental {
 	fireElemental.AutoAttacks.MHConfig().ProcMask |= core.ProcMaskSpellDamage
 	fireElemental.AutoAttacks.MHConfig().ClassSpellMask |= SpellMaskFireElementalMelee
 
-	fireElemental.OnPetEnable = fireElemental.enable(isGuardian)
+	fireElemental.OnPetEnable = fireElemental.enable()
 	fireElemental.OnPetDisable = fireElemental.disable
 
 	shaman.AddPet(fireElemental)
@@ -68,12 +68,11 @@ func (shaman *Shaman) NewFireElemental(isGuardian bool) *FireElemental {
 	return fireElemental
 }
 
-func (fireElemental *FireElemental) enable(isGuardian bool) func(*core.Simulation) {
+func (fireElemental *FireElemental) enable() func(*core.Simulation) {
 	return func(sim *core.Simulation) {
-		fireElemental.EnableDynamicStats(fireElemental.shamanOwner.fireElementalStatInheritance(isGuardian))
 		if fireElemental.empowerAutocast {
 			if fireElemental.Empower.Cast(sim, &fireElemental.shamanOwner.Unit) {
-				fireElemental.AutoAttacks.StopMeleeUntil(sim, fireElemental.Empower.Hot(&fireElemental.shamanOwner.Unit).ExpiresAt(), false)
+				fireElemental.AutoAttacks.StopMeleeUntil(sim, fireElemental.Empower.Hot(&fireElemental.shamanOwner.Unit).ExpiresAt())
 			}
 		}
 	}
@@ -133,7 +132,7 @@ func (fireElemental *FireElemental) TryCast(sim *core.Simulation, target *core.U
 		return false
 	}
 	// all spell casts reset the elemental's swing timer
-	fireElemental.AutoAttacks.StopMeleeUntil(sim, sim.CurrentTime+spell.CurCast.CastTime, false)
+	fireElemental.AutoAttacks.StopMeleeUntil(sim, sim.CurrentTime+spell.CurCast.CastTime)
 	return true
 }
 

@@ -10,7 +10,7 @@ import (
 
 var MAX_UPGRADE_LEVELS = []int{1, 2}
 
-const UPGRADE_SYSTEM_ACTIVE = true
+const UPGRADE_SYSTEM_ACTIVE = false
 
 type Item struct {
 	Id                     int
@@ -41,6 +41,7 @@ type Item struct {
 	Sockets                []int
 	SocketModifier         []float64 // Todo: Figure out if this is socket modifier in disguise or something else - I call it that for now.
 	NameDescription        string    // Contains information for i.E. Thunderforging. Normal = Thunderforged, HC = Heroic Thunderforged
+	RequiredLevel          int32
 }
 
 func (item *Item) ToUIItem() *proto.UIItem {
@@ -66,6 +67,7 @@ func (item *Item) ToScaledUIItem(itemLevel int) *proto.UIItem {
 		GemSockets:          item.GetGemSlots(),
 		SocketBonus:         NullFloat(item.GetGemBonus().ToProtoArray()),
 		NameDescription:     item.NameDescription,
+		RequiredLevel:       item.RequiredLevel,
 	}
 
 	item.ParseItemFlags(uiItem)

@@ -31,49 +31,49 @@ var ItemSetFirelordsVestments = core.NewItemSet(core.ItemSet{
 	},
 })
 
-// T12
-var ItemSetFirehawkRobesOfConflagration = core.NewItemSet(core.ItemSet{
-	Name: "Firehawk Robes of Conflagration",
-	Bonuses: map[int32]core.ApplySetBonus{
-		// You have a chance to summon a Mirror Image to assist you in battle for 15 sec when you cast Frostbolt, Fireball, Frostfire Bolt, or Arcane Blast.
-		// (Proc chance: 20%, 45s cooldown)
-		2: func(agent core.Agent, setBonusAura *core.Aura) {
-			mage := agent.(MageAgent).GetMage()
+// // T12
+// var ItemSetFirehawkRobesOfConflagration = core.NewItemSet(core.ItemSet{
+// 	Name: "Firehawk Robes of Conflagration",
+// 	Bonuses: map[int32]core.ApplySetBonus{
+// 		// You have a chance to summon a Mirror Image to assist you in battle for 15 sec when you cast Frostbolt, Fireball, Frostfire Bolt, or Arcane Blast.
+// 		// (Proc chance: 20%, 45s cooldown)
+// 		2: func(agent core.Agent, setBonusAura *core.Aura) {
+// 			mage := agent.(MageAgent).GetMage()
 
-			setBonusAura.AttachProcTrigger(core.ProcTrigger{
-				Name:           "Item - Mage T12 2P Bonus",
-				Callback:       core.CallbackOnCastComplete,
-				ClassSpellMask: MageSpellArcaneBlast | MageSpellFireball | MageSpellFrostfireBolt | MageSpellFrostbolt,
-				ProcChance:     0.20,
-				ICD:            time.Second * 45,
-				Handler: func(sim *core.Simulation, spell *core.Spell, result *core.SpellResult) {
-					mage.t12MirrorImage.EnableWithTimeout(sim, mage.t12MirrorImage, time.Second*15)
-				},
-			})
-		},
-		// Your spells have an increased chance to trigger Brain Freeze or Hot Streak.
-		// In addition, Arcane Power decreases the cost of your damaging spells by 10% instead of increasing their cost.
-		4: func(agent core.Agent, setBonusAura *core.Aura) {
-			mage := agent.(MageAgent).GetMage()
+// 			setBonusAura.AttachProcTrigger(core.ProcTrigger{
+// 				Name:           "Item - Mage T12 2P Bonus",
+// 				Callback:       core.CallbackOnCastComplete,
+// 				ClassSpellMask: MageSpellArcaneBlast | MageSpellFireball | MageSpellFrostfireBolt | MageSpellFrostbolt,
+// 				ProcChance:     0.20,
+// 				ICD:            time.Second * 45,
+// 				Handler: func(sim *core.Simulation, spell *core.Spell, result *core.SpellResult) {
+// 					mage.t12MirrorImage.EnableWithTimeout(sim, mage.t12MirrorImage, time.Second*15)
+// 				},
+// 			})
+// 		},
+// 		// Your spells have an increased chance to trigger Brain Freeze or Hot Streak.
+// 		// In addition, Arcane Power decreases the cost of your damaging spells by 10% instead of increasing their cost.
+// 		4: func(agent core.Agent, setBonusAura *core.Aura) {
+// 			mage := agent.(MageAgent).GetMage()
 
-			setBonusAura.ApplyOnGain(func(_ *core.Aura, _ *core.Simulation) {
-				mage.brainFreezeProcChance += .15
-				mage.baseHotStreakProcChance += 0.30
-			})
+// 			setBonusAura.ApplyOnGain(func(_ *core.Aura, _ *core.Simulation) {
+// 				mage.brainFreezeProcChance += .15
+// 				mage.baseHotStreakProcChance += 0.30
+// 			})
 
-			setBonusAura.ApplyOnExpire(func(_ *core.Aura, _ *core.Simulation) {
-				mage.brainFreezeProcChance -= .15
-				mage.baseHotStreakProcChance -= .30
-			})
+// 			setBonusAura.ApplyOnExpire(func(_ *core.Aura, _ *core.Simulation) {
+// 				mage.brainFreezeProcChance -= .15
+// 				mage.baseHotStreakProcChance -= .30
+// 			})
 
-			setBonusAura.ExposeToAPL(99064)
+// 			setBonusAura.ExposeToAPL(99064)
 
-			// Arcane Power Cost reduction implemented in:
-			// talents_arcane.go#278
-			mage.T12_4pc = setBonusAura
-		},
-	},
-})
+// 			// Arcane Power Cost reduction implemented in:
+// 			// talents_arcane.go#278
+// 			mage.T12_4pc = setBonusAura
+// 		},
+// 	},
+// })
 
 // T13
 var ItemSetTimeLordsRegalia = core.NewItemSet(core.ItemSet{

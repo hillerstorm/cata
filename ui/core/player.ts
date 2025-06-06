@@ -1309,6 +1309,8 @@ export class Player<SpecType extends Spec> {
 			return itemData.filter(itemElem => filterFunc(getItemFunc(itemElem)));
 		};
 
+		itemData = filterItems(itemData, item => item.requiredLevel <= Mechanics.CHARACTER_LEVEL);
+
 		if (filters.minIlvl != 0) {
 			itemData = filterItems(itemData, item => (item.scalingOptions?.[ItemLevelState.Base].ilvl || item.ilvl) >= filters.minIlvl);
 		}

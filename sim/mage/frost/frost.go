@@ -26,7 +26,7 @@ func RegisterFrostMage() {
 type FrostMage struct {
 	*mage.Mage
 
-	waterElemental *WaterElemental
+	// waterElemental *WaterElemental
 }
 
 func NewFrostMage(character *core.Character, options *proto.Player) *FrostMage {
@@ -35,7 +35,7 @@ func NewFrostMage(character *core.Character, options *proto.Player) *FrostMage {
 	frostMage := &FrostMage{
 		Mage: mage.NewMage(character, options, frostOptions.ClassOptions),
 	}
-	frostMage.waterElemental = frostMage.NewWaterElemental(0.20)
+	// frostMage.waterElemental = frostMage.NewWaterElemental(0.20)
 
 	return frostMage
 }
@@ -51,7 +51,7 @@ func (frostMage *FrostMage) Reset(sim *core.Simulation) {
 func (frostMage *FrostMage) Initialize() {
 	frostMage.Mage.Initialize()
 
-	frostMage.registerSummonWaterElementalSpell()
+	// frostMage.registerSummonWaterElementalSpell()
 }
 
 func (frostMage *FrostMage) ApplyTalents() {
@@ -64,11 +64,11 @@ func (frostMage *FrostMage) ApplyTalents() {
 		Kind:       core.SpellMod_DamageDone_Pct,
 	})
 
-	frostMage.waterElemental.AddStaticMod(core.SpellModConfig{
-		School:     core.SpellSchoolFrost,
-		FloatValue: 0.25,
-		Kind:       core.SpellMod_DamageDone_Pct,
-	})
+	// frostMage.waterElemental.AddStaticMod(core.SpellModConfig{
+	// 	School:     core.SpellSchoolFrost,
+	// 	FloatValue: 0.25,
+	// 	Kind:       core.SpellMod_DamageDone_Pct,
+	// })
 
 	frostMage.Mage.AddStaticMod(core.SpellModConfig{
 		ClassMask:  mage.MageSpellFrostbolt,

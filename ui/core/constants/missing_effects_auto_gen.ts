@@ -3,13 +3,31 @@
 // Changes will be overwritten on next database generation
 
 export const MISSING_ITEM_EFFECTS = [
+    68983, // Eye of Blazing Power (N)
+    69149, // Eye of Blazing Power (H)
+    69897, // Fandral's Flamescythe (N)
+    71466, // Fandral's Flamescythe (H)
+    72333, // Ruthless Gladiator's Dreadplate Gauntlets (Season 11)
+    73619, // Cataclysmic Gladiator's Dreadplate Gauntlets (LFR) (Season 11)
+    73741, // Cataclysmic Gladiator's Dreadplate Gauntlets (Season 11 Elite)
+    77196, // Maw of the Dragonlord (N)
+    77199, // Heart of Unliving (N)
+    77209, // Windward Heart (N)
     77530, // Ghost Iron Dragonling
+    77976, // Heart of Unliving (LFR) (Raid Finder)
+    77981, // Windward Heart (LFR) (Raid Finder)
+    77996, // Heart of Unliving (H)
+    78001, // Windward Heart (H)
+    78476, // Maw of the Dragonlord (H)
+    78485, // Maw of the Dragonlord (LFR) (Raid Finder)
     81136, // Cloak of Hidden Flasks (H)
     84373, // Dreadful Gladiator's Dreadplate Gauntlets (Season 12)
     84835, // Malevolent Gladiator's Dreadplate Gauntlets (LFR) (Season 12)
     85028, // Malevolent Gladiator's Dreadplate Gauntlets (Season 12 Elite)
+    86198, // Hammer of Ten Thunders
+    86199, // Jade Infused Blade
     86518, // Yaungol Fire Carrier
-    88585, // Dislodged Stinger
+    86585, // Golden Fleece
     91149, // Tyrannical Gladiator's Dreadplate Gauntlets (LFR) (Season 13) (Alliance)
     91150, // Tyrannical Gladiator's Dreadplate Gauntlets (Season 13 Elite)
     91502, // Malevolent Gladiator's Dreadplate Gauntlets (Season 13)
@@ -55,11 +73,6 @@ export const MISSING_ITEM_EFFECTS = [
     100034, // Tyrannical Gladiator's Dreadplate Gauntlets (Season 14) (Horde)
     100245, // Grievous Gladiator's Dreadplate Gauntlets (Season 14) (Alliance)
     100594, // Grievous Gladiator's Dreadplate Gauntlets (Season 14) (Horde)
-    101038, // Springrain Idol of Wisdom
-    101102, // Mistdancer Idol of Wisdom
-    101135, // Sunsoul Idol of Wisdom
-    101179, // Communal Idol of Wisdom
-    101247, // Streamtalker Idol of Wisdom
     102246, // Xing-Ho, Breath of Yu'lon
     102247, // Jina-Kang, Kindness of Chi-Ji
     102248, // Fen-Yu, Fury of Xuen

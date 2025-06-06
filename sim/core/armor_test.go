@@ -8,11 +8,11 @@ import (
 
 func TestWeakenedArmorStacks(t *testing.T) {
 	sim := Simulation{}
-	baseArmor := 24835.0
+	baseArmor := 11977.0
 	target := Unit{
 		Type:         EnemyUnit,
 		Index:        0,
-		Level:        93,
+		Level:        88,
 		auraTracker:  newAuraTracker(),
 		initialStats: stats.Stats{stats.Armor: baseArmor},
 		PseudoStats:  stats.NewPseudoStats(),
@@ -21,7 +21,7 @@ func TestWeakenedArmorStacks(t *testing.T) {
 	target.stats = target.initialStats
 	expectedArmor := baseArmor
 	if target.Armor() != expectedArmor {
-		t.Fatalf("Armor value for target should be %f but found %f", 24835.0, target.Armor())
+		t.Fatalf("Armor value for target should be %f but found %f", 11977.0, target.Armor())
 	}
 	stacks := int32(1)
 	sunderAura := WeakenedArmorAura(&target)
@@ -40,11 +40,11 @@ func TestWeakenedArmorStacks(t *testing.T) {
 
 func TestDamageReductionFromArmor(t *testing.T) {
 	sim := Simulation{}
-	baseArmor := 24835.0
+	baseArmor := 11977.0
 	target := Unit{
 		Type:         EnemyUnit,
 		Index:        0,
-		Level:        93,
+		Level:        88,
 		auraTracker:  newAuraTracker(),
 		initialStats: stats.Stats{stats.Armor: baseArmor},
 		PseudoStats:  stats.NewPseudoStats(),
@@ -52,10 +52,10 @@ func TestDamageReductionFromArmor(t *testing.T) {
 	}
 	attacker := Unit{
 		Type:  PlayerUnit,
-		Level: 90,
+		Level: 85,
 	}
 	target.stats = target.initialStats
-	expectedDamageReduction := 0.349334
+	expectedDamageReduction := 0.314795
 	attackTable := NewAttackTable(&attacker, &target)
 	tolerance := 0.0001
 	if !WithinToleranceFloat64(1-expectedDamageReduction, attackTable.getArmorDamageModifier(), tolerance) {
@@ -66,7 +66,7 @@ func TestDamageReductionFromArmor(t *testing.T) {
 	weakenedArmorAura := WeakenedArmorAura(&target)
 	weakenedArmorAura.Activate(&sim)
 	weakenedArmorAura.SetStacks(&sim, 3)
-	expectedDamageReduction = 0.320864
+	expectedDamageReduction = 0.287895
 	if !WithinToleranceFloat64(1-expectedDamageReduction, attackTable.getArmorDamageModifier(), tolerance) {
 		t.Fatalf("Expected major armor modifier to result in %f damage reduction got %f", expectedDamageReduction, 1-attackTable.getArmorDamageModifier())
 	}
@@ -75,7 +75,7 @@ func TestDamageReductionFromArmor(t *testing.T) {
 	// Major Multi
 	shatteringThrowAura := ShatteringThrowAura(&target, attacker.UnitIndex)
 	shatteringThrowAura.Activate(&sim)
-	expectedDamageReduction = 0.300459
+	expectedDamageReduction = 0.268757
 	if !WithinToleranceFloat64(1-expectedDamageReduction, attackTable.getArmorDamageModifier(), tolerance) {
 		t.Fatalf("Expected major & shattering modifier to result in %f damage reduction got %f", expectedDamageReduction, 1-attackTable.getArmorDamageModifier())
 	}

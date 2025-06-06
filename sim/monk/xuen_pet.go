@@ -29,7 +29,7 @@ func (monk *Monk) NewXuen() *Xuen {
 			Name:      "Xuen, The White Tiger",
 			Owner:     &monk.Character,
 			BaseStats: baseStats,
-			StatInheritance: func(ownerStats stats.Stats) stats.Stats {
+			NonHitExpStatInheritance: func(ownerStats stats.Stats) stats.Stats {
 
 				hitRating := ownerStats[stats.HitRating]
 				expertiseRating := ownerStats[stats.ExpertiseRating]

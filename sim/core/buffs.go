@@ -283,16 +283,16 @@ func applyStaminaBuffs(u *Unit, raidBuffs *proto.RaidBuffs) {
 //////// 3000 Mastery Rating
 
 func RoarOfCourageAura(u *Unit) *Aura {
-	return makeExclusiveBuff(u, BuffConfig{"Roar of Courage", ActionID{SpellID: 93435}, []StatConfig{{stats.MasteryRating, 3000, false}}})
+	return makeExclusiveBuff(u, BuffConfig{"Roar of Courage", ActionID{SpellID: 93435}, []StatConfig{{stats.MasteryRating, 893, false}}})
 }
 func SpiritBeastBlessingAura(u *Unit) *Aura {
-	return makeExclusiveBuff(u, BuffConfig{"Spirit Beast Blessing", ActionID{SpellID: 128997}, []StatConfig{{stats.MasteryRating, 3000, false}}})
+	return makeExclusiveBuff(u, BuffConfig{"Spirit Beast Blessing", ActionID{SpellID: 128997}, []StatConfig{{stats.MasteryRating, 893, false}}})
 }
 func BlessingOfMightAura(u *Unit) *Aura {
-	return makeExclusiveBuff(u, BuffConfig{"Blessing of Might", ActionID{SpellID: 19740}, []StatConfig{{stats.MasteryRating, 3000, false}}})
+	return makeExclusiveBuff(u, BuffConfig{"Blessing of Might", ActionID{SpellID: 19740}, []StatConfig{{stats.MasteryRating, 893, false}}})
 }
 func GraceOfAirAura(u *Unit) *Aura {
-	return makeExclusiveBuff(u, BuffConfig{"Grace of Air", ActionID{SpellID: 116956}, []StatConfig{{stats.MasteryRating, 3000, false}}})
+	return makeExclusiveBuff(u, BuffConfig{"Grace of Air", ActionID{SpellID: 116956}, []StatConfig{{stats.MasteryRating, 893, false}}})
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -453,10 +453,10 @@ func registerExclusiveSpellHaste(aura *Aura, spellHastePercent float64) {
 	aura.NewExclusiveEffect("SpellHaste%Buff", false, ExclusiveEffect{
 		Priority: spellHastePercent,
 		OnGain: func(ee *ExclusiveEffect, sim *Simulation) {
-			ee.Aura.Unit.MultiplyCastSpeed(1 + ee.Priority)
+			ee.Aura.Unit.MultiplyCastSpeed(sim, 1+ee.Priority)
 		},
 		OnExpire: func(ee *ExclusiveEffect, sim *Simulation) {
-			ee.Aura.Unit.MultiplyCastSpeed(1 / (1 + ee.Priority))
+			ee.Aura.Unit.MultiplyCastSpeed(sim, 1/(1+ee.Priority))
 		},
 	})
 }
@@ -688,10 +688,10 @@ func multiplyCastSpeedEffect(aura *Aura, multiplier float64) *ExclusiveEffect {
 	return aura.NewExclusiveEffect("MultiplyCastSpeed", false, ExclusiveEffect{
 		Priority: multiplier,
 		OnGain: func(ee *ExclusiveEffect, sim *Simulation) {
-			ee.Aura.Unit.MultiplyCastSpeed(multiplier)
+			ee.Aura.Unit.MultiplyCastSpeed(sim, multiplier)
 		},
 		OnExpire: func(ee *ExclusiveEffect, sim *Simulation) {
-			ee.Aura.Unit.MultiplyCastSpeed(1 / multiplier)
+			ee.Aura.Unit.MultiplyCastSpeed(sim, 1/multiplier)
 		},
 	})
 }

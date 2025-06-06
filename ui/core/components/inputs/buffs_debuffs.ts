@@ -219,11 +219,11 @@ export const RAID_BUFFS_CONFIG = [
 ] as PickerStatOptions[];
 
 export const RAID_BUFFS_MISC_CONFIG = [
-	{
-		config: Skullbanner,
-		picker: IconPicker,
-		stats: [Stat.StatAttackPower, Stat.StatRangedAttackPower, Stat.StatSpellPower],
-	},
+	// {
+	// 	config: Skullbanner,
+	// 	picker: IconPicker,
+	// 	stats: [Stat.StatAttackPower, Stat.StatRangedAttackPower, Stat.StatSpellPower],
+	// },
 	{
 		config: StormLashTotem,
 		picker: IconPicker,

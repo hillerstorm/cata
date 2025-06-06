@@ -35,12 +35,12 @@ func (druid *Druid) registerBarkskinCD() {
 		Cast: core.CastConfig{
 			CD: core.Cooldown{
 				Timer:    druid.NewTimer(),
-				Duration: core.TernaryDuration(druid.Spec == proto.Spec_SpecGuardianDruid, time.Second * 30, time.Second * 60),
+				Duration: core.TernaryDuration(druid.Spec == proto.Spec_SpecGuardianDruid, time.Second*30, time.Second*60),
 			},
 		},
 		ApplyEffects: func(sim *core.Simulation, _ *core.Unit, _ *core.Spell) {
 			druid.BarkskinAura.Activate(sim)
-			druid.AutoAttacks.StopMeleeUntil(sim, sim.CurrentTime, false)
+			druid.AutoAttacks.StopMeleeUntil(sim, sim.CurrentTime)
 		},
 	})
 

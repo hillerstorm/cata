@@ -54,7 +54,7 @@ type DeathKnight struct {
 	// Gargoyle   *GargoylePet
 	// ArmyGhoul  []*GhoulPet
 	// RuneWeapon *RuneWeaponPet
-	Bloodworm []*BloodwormPet
+	// Bloodworm []*BloodwormPet
 
 	// Diseases
 	FrostFeverSpell  *core.Spell

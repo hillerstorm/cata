@@ -890,6 +890,7 @@ export class Sim {
 		return DatabaseFilters.create({
 			oneHandedWeapons: true,
 			twoHandedWeapons: true,
+			maxIlvl: 416,
 		});
 	}
 }

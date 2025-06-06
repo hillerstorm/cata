@@ -15,12 +15,12 @@ type Mage struct {
 	FireOptions   *proto.FireMage_Options
 	FrostOptions  *proto.FrostMage_Options
 
-	mirrorImage *MirrorImage
+	// mirrorImage *MirrorImage
 	// flameOrb     *FlameOrb
 	// frostfireOrb *FrostfireOrb
 
-	t12MirrorImage *T12MirrorImage
-	t13ProcAura    *core.StatBuffAura
+	// t12MirrorImage *T12MirrorImage
+	t13ProcAura *core.StatBuffAura
 
 	arcaneMissilesTickSpell *core.Spell
 	Combustion              *core.Spell
@@ -109,7 +109,7 @@ func (mage *Mage) Initialize() {
 	// mage.registerFrostfireBoltSpell()
 	mage.registerEvocation()
 	// mage.registerManaGemsCD()
-	mage.registerMirrorImageCD()
+	// mage.registerMirrorImageCD()
 	// mage.registerCombustionSpell()
 	// mage.registerBlastWaveSpell()
 	mage.registerDragonsBreathSpell()
@@ -171,13 +171,13 @@ func NewMage(character *core.Character, options *proto.Player, mageOptions *prot
 
 	mage.EnableManaBar()
 
-	mage.mirrorImage = mage.NewMirrorImage()
+	// mage.mirrorImage = mage.NewMirrorImage()
 	// mage.flameOrb = mage.NewFlameOrb()
 	// mage.frostfireOrb = mage.NewFrostfireOrb()
 
-	if mage.CouldHaveSetBonus(ItemSetFirehawkRobesOfConflagration, 2) {
-		mage.t12MirrorImage = mage.NewT12MirrorImage()
-	}
+	// if mage.CouldHaveSetBonus(ItemSetFirehawkRobesOfConflagration, 2) {
+	// 	mage.t12MirrorImage = mage.NewT12MirrorImage()
+	// }
 
 	return mage
 }

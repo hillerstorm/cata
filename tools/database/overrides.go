@@ -858,16 +858,9 @@ var ExtraItemIcons = []int32{
 
 // Item Ids of consumables to allow
 var ConsumableAllowList = []int32{
-	//Fortune Cookie and Feast
-	62649,
-	62290,
-	//Migty Rage Potion
-	13442,
-	// Dark Rune
-	20520,
-	46376, // Flask of the Frost Wyrm
-	45568, // Firecracker Salmon
-	54221, // Potion of Speed
+	58088, // Flask of Titanic Strength
+	62670, // Beer-Basted Crocolisk
+	58146, // Golemblood Potion
 }
 var ConsumableDenyList = []int32{
 	57099,

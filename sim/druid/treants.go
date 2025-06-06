@@ -45,7 +45,7 @@ func (druid *Druid) NewDefaultTreant(config TreantConfig) *DefaultTreantImpl {
 		Pet: core.NewPet(core.PetConfig{
 			Name:                            "Treant",
 			Owner:                           &druid.Character,
-			StatInheritance:                 config.StatInheritance,
+			NonHitExpStatInheritance:        config.StatInheritance,
 			HasDynamicMeleeSpeedInheritance: true,
 			HasDynamicCastSpeedInheritance:  true,
 		}),

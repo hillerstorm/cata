@@ -30,12 +30,12 @@ func (warlock *Warlock) NewEbonImp() *EbonImpPet {
 
 	imp := &EbonImpPet{
 		Pet: core.NewPet(core.PetConfig{
-			Name:            "Ebon Imp",
-			Owner:           &warlock.Character,
-			BaseStats:       baseStats,
-			StatInheritance: statInheritance,
-			EnabledOnStart:  false,
-			IsGuardian:      true,
+			Name:                     "Ebon Imp",
+			Owner:                    &warlock.Character,
+			BaseStats:                baseStats,
+			NonHitExpStatInheritance: statInheritance,
+			EnabledOnStart:           false,
+			IsGuardian:               true,
 		}),
 	}
 	imp.EnableAutoAttacks(imp, core.AutoAttackOptions{

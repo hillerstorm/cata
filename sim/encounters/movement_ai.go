@@ -14,13 +14,13 @@ func addMovementAI() {
 		Config: &proto.Target{
 			Id:        31147,
 			Name:      "Movement",
-			Level:     93,
+			Level:     88,
 			MobType:   proto.MobType_MobTypeMechanical,
 			TankIndex: 0,
 
 			Stats: stats.Stats{
 				stats.Health:      120_016_403,
-				stats.Armor:       24835,
+				stats.Armor:       11977,
 				stats.AttackPower: 0,
 			}.ToProtoArray(),
 
