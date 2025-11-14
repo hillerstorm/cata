@@ -43,7 +43,7 @@ func (value *APLValueInputDelay) GetDuration(sim *Simulation) time.Duration {
 	return value.unit.ReactionTime
 }
 func (value *APLValueInputDelay) String() string {
-	return "Channel Clip Delay()"
+	return "Input Delay()"
 }
 
 type APLValueFrontOfTarget struct {

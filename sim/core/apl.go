@@ -262,12 +262,7 @@ func (unit *Unit) newAPLRotation(config *proto.APLRotation) *APLRotation {
 		// Remove MCDs that are referenced by APL actions, so that the Autocast Other Cooldowns
 		// action does not include them.
 		for _, action := range rotation.allAPLActions() {
-			if castSpellAction, ok := action.impl.(*APLActionCastSpell); ok {
-				character.removeInitialMajorCooldown(castSpellAction.spell.ActionID)
-			}
-			if castFriendlySpellAction, ok := action.impl.(*APLActionCastFriendlySpell); ok {
-				character.removeInitialMajorCooldown(castFriendlySpellAction.spell.ActionID)
-			}
+			removeFromMajorCooldowns(action.impl, character)
 		}
 
 		// If user has Item Swapping enabled and hasn't swapped back to the main set do it here.

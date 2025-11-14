@@ -147,12 +147,30 @@ func (rot *APLRotation) newAPLAction(config *proto.APLAction) *APLAction {
 		return nil
 	}
 
+	condition := rot.coerceTo(rot.newAPLValue(config.Condition), proto.APLValueType_ValueTypeBool)
+
+	if condition != nil {
+		if constVal, ok := condition.(*APLValueConst); ok && !constVal.boolVal {
+			character := rot.unit.Env.GetAgentFromUnit(rot.unit).GetCharacter()
+			removeFromMajorCooldowns(impl, character)
+			return nil
+		}
+	}
+
 	action := &APLAction{
-		condition: rot.coerceTo(rot.newAPLValue(config.Condition), proto.APLValueType_ValueTypeBool),
+		condition: condition,
 		impl:      impl,
 	}
 
 	return action
+}
+
+func removeFromMajorCooldowns(action APLActionImpl, character *Character) {
+	if castSpellAction, ok := action.(*APLActionCastSpell); ok {
+		character.removeInitialMajorCooldown(castSpellAction.spell.ActionID)
+	} else if castFriendlySpellAction, ok := action.(*APLActionCastFriendlySpell); ok {
+		character.removeInitialMajorCooldown(castFriendlySpellAction.spell.ActionID)
+	}
 }
 
 func (rot *APLRotation) newAPLActionImpl(config *proto.APLAction) APLActionImpl {

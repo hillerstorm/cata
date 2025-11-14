@@ -847,6 +847,11 @@ func (rot *APLRotation) newValueAnd(config *proto.APLValueAnd, _ *proto.UUID, gr
 	} else if len(vals) == 1 {
 		return vals[0]
 	}
+	for _, val := range vals {
+		if constVal, ok := val.(*APLValueConst); ok && constVal.valType == proto.APLValueType_ValueTypeBool && !constVal.boolVal {
+			return constVal
+		}
+	}
 	return &APLValueAnd{
 		vals: vals,
 	}
@@ -862,6 +867,11 @@ func (rot *APLRotation) newValueOr(config *proto.APLValueOr, _ *proto.UUID, grou
 	} else if len(vals) == 1 {
 		return vals[0]
 	}
+	for _, val := range vals {
+		if constVal, ok := val.(*APLValueConst); ok && constVal.valType == proto.APLValueType_ValueTypeBool && constVal.boolVal {
+			return constVal
+		}
+	}
 	return &APLValueOr{
 		vals: vals,
 	}
@@ -871,6 +881,11 @@ func (rot *APLRotation) newValueNot(config *proto.APLValueNot, _ *proto.UUID, gr
 	val := rot.coerceTo(rot.newAPLValueWithContext(config.Val, groupVariables), proto.APLValueType_ValueTypeBool)
 	if val == nil {
 		return nil
+	}
+	if constVal, ok := val.(*APLValueConst); ok && constVal.valType == proto.APLValueType_ValueTypeBool {
+		constVal.boolVal = !constVal.boolVal
+		constVal.stringVal = Ternary(constVal.boolVal, "true", "false")
+		return constVal
 	}
 	return &APLValueNot{
 		val: val,
